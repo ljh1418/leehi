@@ -11,9 +11,11 @@
 <body>
 <h1>home.jsp</h1>
 <h5>
-	<authorize access="isAnonymous()">
-		<a href='<c:url value="/secu/loginPage"/>'>login</a>
-	</authorize>
+	<sec:authorize access="isAnonymous()">
+		<h5>
+			<a href='<c:url value="/secu/loginPage"/>'>LOGIN</a> 로그인 해주세요.
+		</h5>
+    </sec:authorize>
 </h5>
 
 <a href='<c:url value="/secu/user"/>'>user</a>

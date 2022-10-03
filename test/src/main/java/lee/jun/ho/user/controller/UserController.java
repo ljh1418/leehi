@@ -13,14 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	
-	@GetMapping("/loginPage")
-	public String loginPage() {
-		
-		log.info("로그인 페이지!!!");
-
-		
-		return "login";
-	}
+//	@GetMapping("/loginPage")
+//	public String loginPage() {
+//		
+//		log.info("로그인 페이지!!!");
+//
+//		
+//		return "login";
+//	}
 	
 	@GetMapping("/users/login")
 	public String login(String error, String logout, Model model) {
@@ -62,8 +62,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/secu/loginPage")
-	public String page() throws Exception{
-		System.out.println("page() 들어옴 !!!");
+	public String loginPage() throws Exception{
+		System.out.println("loginPage() 들어옴 !!!");
 		return "secu/loginPage";
 	}
 	
@@ -79,6 +79,12 @@ public class UserController {
 	public String secuUser() throws Exception{
 		System.out.println("secuUser() 들어옴 !!!");
 		return "secu/user";
+	}
+	
+	/* 스프링 시큐리티 접근불가 페이지 커스터마이징 */
+	@RequestMapping(value="/access_denied_page")
+	public String accessDeniedPage() throws Exception {
+		return "/access_denied_page";
 	}
 	
 	
