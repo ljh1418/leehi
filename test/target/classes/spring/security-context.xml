@@ -20,9 +20,11 @@ authentication-failure-handler-ref 	: 로그인 실패시 authentication-failure
 always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이동 (default: false)
 -->
 <http auto-config="true" use-expressions="true">
+
+	<!-- 인터셉터 페이지 가로체가는 역활 -->
 	<intercept-url pattern="/member/**" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')"/>
 	<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_MEMBER','ROLE_ADMIN')"/>
-	<intercept-url pattern="/sample/**" access="hasRole('ROLE_ADMIN')"/>
+	<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	<intercept-url pattern="/**" access="permitAll"/>
 	
 	<!-- 스프링 시큐리티 로그인페이지 커스터마이징 -->	    
@@ -38,10 +40,29 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
     <access-denied-handler
 		error-page="/access_denied_page"
 	/>
+	
+
+	
+	<!--  
+	로그아웃관련
+	logout-url			: 로그아웃 처리에 대한 URL. form태그의 action 속성에 지정한 값. (default: POST /logout)
+	logout-success-url 	: 로그아웃 성공시, 이동할 URL. (default: /login?logout)
+	invalidate-session 	: 로그아웃 시, session을 무효화할 지 선택. (default: true)
+	delete-cookies 		: 로그아웃 성공시, 삭제할 쿠키 이름 지정
+	success-handler-ref : 로그아웃 성공시, logout-success-url 이 아닌 핸들러로 리다이렉트 
+	-->
+	
+	<logout
+    	logout-url="/logout"
+    	invalidate-session="true"
+    	logout-success-url="/"
+    />
+	
 
     
 </http>
-        
+
+<!-- 유저 id , pw , 권한 -->        
 <authentication-manager>
     <authentication-provider>
         <user-service>

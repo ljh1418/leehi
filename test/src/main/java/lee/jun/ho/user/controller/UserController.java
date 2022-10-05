@@ -88,6 +88,28 @@ public class UserController {
 	}
 	
 	
+	
+	@RequestMapping(value="/page")
+	public String page() throws Exception {
+		return "/page";
+	}
+	
+	@RequestMapping(value="/user/page")
+	public String userPage() throws Exception {
+		return "/user/page";
+	}
+	
+	@RequestMapping(value="/member/page")
+	public String memberPage() throws Exception {
+		return "/member/page";
+	}
+	
+	@RequestMapping(value="/admin/page")
+	public String adminPage() throws Exception {
+		return "/admin/page";
+	}
+	
+	
 
 	
 	
