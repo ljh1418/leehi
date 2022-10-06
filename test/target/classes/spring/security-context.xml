@@ -62,8 +62,8 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
     
 </http>
 
-<!-- 유저 id , pw , 권한 -->        
-<authentication-manager>
+<!-- 테스트용 유저 id , pw , 권한 -->        
+<!-- <authentication-manager>
     <authentication-provider>
         <user-service>
             <user name="user" password="user" authorities="ROLE_USER"/>
@@ -71,7 +71,19 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
             <user name="admin" password="admin" authorities="ROLE_ADMIN"/>
         </user-service>
     </authentication-provider>
-</authentication-manager>
+</authentication-manager> -->
+
+<!-- DB데이터 유저정보 -->
+<!-- 사용자 인증컬럼 ENABLED가 없으면 에러 나오는 현상 있음 -->     
+<jdbc-user-service data-source-ref="dataSourceOracleSpied" id="userService"
+			users-by-username-query="SELECT ID as loginId, PASSWORD as loginPwd, ENABLED FROM USERTEST WHERE ID=?"
+			authorities-by-username-query="SELECT ID as loginID, AUTHORITY FROM USERTEST WHERE ID=?"
+		/>
+        
+        <authentication-manager>
+            <authentication-provider user-service-ref="userService">
+            </authentication-provider>
+        </authentication-manager>
 
 
 
