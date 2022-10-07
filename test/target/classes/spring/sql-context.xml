@@ -28,56 +28,37 @@
 		<property name="password" value="LEGAS50_NIKKO"/> 
 	</bean> -->
 	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<!-- 드라이버 클래스 이름이 변경
-		oracle.jdbc.driver.OracleDriver -->
-   		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-   		
+	<bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- 드라이버 클래스 이름이 변경됨 --><!-- oracle.jdbc.driver.OracleDriver -->
    		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+   		<!-- 연결문자열에 log4jdbc가 추가됨 -->
    		<property name="url" value="jdbc:oracle:thin:@175.198.103.144:46131:orcl" /> 
 		<property name="username" value="LEGAS50_NIKKO"/> 
 		<property name="password" value="LEGAS50_NIKKO"/> 
    </bean>
 	
-	<!-- <bean id="dataSourceOracle" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-	    <constructor-arg ref="dataSourceOracleSpied" />
-	    <property name="logFormatter">
-	        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
-	            <property name="loggingType" value="MULTI_LINE" />
-	            <property name="margin" value="8" />
-	            <property name="sqlPrefix" value="SQL:" />
-	        </bean>
-	    </property>
-	</bean> -->
-	
-	<bean id="dataSourceOracleSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-   		<property name="url" value="jdbc:oracle:thin:@175.198.103.144:46131:orcl" /> 
-		<property name="username" value="LEGAS50_NIKKO"/> 
-		<property name="password" value="LEGAS50_NIKKO"/> 
-	</bean>
-	
-
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceSpied" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="[   SQL   ]  :  "/>
+            </bean>
+        </property>
+    </bean>
 	
 
   
-  <!-- SqlSessionFactory 객체 주입 -->
-    <!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+  	<!-- SqlSessionFactory 객체 주입 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:/mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath:/mappers/*.xml" />
-    </bean> -->
-    
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSourceOracleSpied" />
-        <property name="configLocation" value="classpath:/mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath:/mappers/*.xml" />
+        <property name="mapperLocations" value="classpath*:/mappers/*.xml" />
     </bean>
     
     
     <!-- SqlSession 객체 주입 -->
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-        <constructor-arg name="sqlSessionFactory"  ref="sqlSessionFactory" />
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSession"/>
     </bean>
-		
+    
 </beans>

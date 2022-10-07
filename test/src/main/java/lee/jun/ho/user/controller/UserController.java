@@ -63,7 +63,7 @@ public class UserController {
 	
 	@RequestMapping(value="/secu/loginPage")
 	public String loginPage() throws Exception{
-		System.out.println("loginPage() 들어옴 !!!");
+		log.info("loginPage 들어옴 !!!");
 		return "secu/loginPage";
 	}
 	

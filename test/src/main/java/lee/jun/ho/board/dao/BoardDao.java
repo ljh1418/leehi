@@ -1,6 +1,6 @@
 package lee.jun.ho.board.dao;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 public class BoardDao {
 	
 	@Autowired
-	SqlSession sql;
+	SqlSessionTemplate sql;
+	
 	
 	public void txInsert() {
 		sql.insert("board.insert");

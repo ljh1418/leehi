@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <beans:beans xmlns="http://www.springframework.org/schema/security" 
-               xmlns:beans="http://www.springframework.org/schema/beans" 
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-               xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
-                                   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"> 
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"> 
 
 
 
@@ -19,6 +21,15 @@ authentication-success-handler-ref 	: 로그인 성공시 default-target-url이 
 authentication-failure-handler-ref 	: 로그인 실패시 authentication-failure-url이 아닌 핸들러로 리다이렉트
 always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이동 (default: false)
 -->
+
+
+
+<!-- xmlns:context="http://www.springframework.org/schema/context" -->
+<!-- http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd -->
+<!-- 추가 혹은 namepsace 에서 context 체크박스 선택 -->
+<!-- security 설정파일에서 SqlSessionTemplate 부분을 찾아야 해서 component 설정 -->
+<!-- <context:component-scan base-package="lee.jun.ho.user.dao" /> -->
+
 <http auto-config="true" use-expressions="true">
 
 	<!-- 인터셉터 페이지 가로체가는 역활 -->
@@ -75,17 +86,19 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 
 <!-- DB데이터 유저정보 -->
 <!-- 사용자 인증컬럼 ENABLED가 없으면 에러 나오는 현상 있음 -->     
-<jdbc-user-service data-source-ref="dataSourceOracleSpied" id="userService"
+<jdbc-user-service data-source-ref="dataSource" id="userService"
 			users-by-username-query="SELECT ID as loginId, PASSWORD as loginPwd, ENABLED FROM USERTEST WHERE ID=?"
 			authorities-by-username-query="SELECT ID as loginID, AUTHORITY FROM USERTEST WHERE ID=?"
 		/>
         
         <authentication-manager>
+	        <!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->
             <authentication-provider user-service-ref="userService">
             </authentication-provider>
         </authentication-manager>
-
-
+		
+		<!-- UserDetailsService 인터페이스를 구현해서 만든 클래스를 userService라는 이름으로 bean 등록한다. -->
+		<beans:bean id="userService" class="lee.jun.ho.user.service.CustomUserDetailsService"/>
 
 
   
