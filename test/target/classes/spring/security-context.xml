@@ -104,14 +104,18 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
 			authorities-by-username-query="SELECT ID as loginID, AUTHORITY FROM USERTEST WHERE ID=?"
 		/> -->
 
-		<!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->        
+		<!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->
+		
+		<!-- ref 와 user-service-ref의 차이는 ???       -->  
         <authentication-manager>
+        	<authentication-provider ref="userAuthProvider"/>
             <authentication-provider user-service-ref="userService">
             </authentication-provider>
         </authentication-manager>
 		
-		<!-- UserDetailsService 인터페이스를 구현해서 만든 클래스를 userService라는 이름으로 bean 등록한다. -->
+		<!-- UserDetailsService , AuthenticationProvider 인터페이스를 구현해서 만든 클래스를 userService라는 이름으로 bean 등록한다. -->
 		<beans:bean id="userService" class="lee.jun.ho.user.service.CustomUserDetailsService"/>
+		<beans:bean id="userAuthProvider" class="lee.jun.ho.user.service.CustomAuthenticationProvider"/>
 
 
 <!-- <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean> -->
