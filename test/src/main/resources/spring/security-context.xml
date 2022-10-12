@@ -28,11 +28,24 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 <!-- http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd -->
 <!-- 추가 혹은 namepsace 에서 context 체크박스 선택 -->
 <!-- security 설정파일에서 SqlSessionTemplate 부분을 찾아야 해서 component 설정 -->
-<!-- <context:component-scan base-package="lee.jun.ho.user.dao" /> -->
+<context:component-scan base-package="lee.jun.ho.user.dao" />
+<!-- 발생원인 > 이쪽에서 설정해주지 않으면 lee.jun.ho.user.dao에 있는 클래스를 바라보는것이 불가능...
+ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter - An internal error occurred while trying to authenticate the user. -->
 
 <http auto-config="true" use-expressions="true">
 
 	<!-- 인터셉터 페이지 가로체가는 역활 -->
+	<!-- 	
+		hasRole('role1') : 권한(role1)을 가지고 있는 경우
+		hasAnyRole('role1', 'role2') : 권한들(role1, role2) 하나라도 가지고 있을 경우 (갯수는 제한없다)
+		pemitAll : 권한 있든 말든 모두 접근 가능하다.
+		denyAll : 권한 있든 말든 모두 접근 불가능하다.
+		isAnonymous() : Anonymous 사용자일 경우 (인증을 하지 않은 사용자)
+		isRememberMe() : Remember-me 기능으로 로그인한 사용자일 경우
+		isAuthenticated() : Anonymous 사용자가 아닐 경우 (인증을 한 사용자)
+		isFullyAuthenticated() : Anonymous 사용자가 아니고 Remember-me 기능으로 로그인 하지 않은 사용자 일 경우 
+	-->
+	
 	<intercept-url pattern="/member/**" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')"/>
 	<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER','ROLE_MEMBER','ROLE_ADMIN')"/>
 	<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
@@ -86,13 +99,13 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 
 <!-- DB데이터 유저정보 -->
 <!-- 사용자 인증컬럼 ENABLED가 없으면 에러 나오는 현상 있음 -->     
-<jdbc-user-service data-source-ref="dataSource" id="userService"
+<!-- <jdbc-user-service data-source-ref="dataSource" id="userService"
 			users-by-username-query="SELECT ID as loginId, PASSWORD as loginPwd, ENABLED FROM USERTEST WHERE ID=?"
 			authorities-by-username-query="SELECT ID as loginID, AUTHORITY FROM USERTEST WHERE ID=?"
-		/>
-        
+		/> -->
+
+		<!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->        
         <authentication-manager>
-	        <!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->
             <authentication-provider user-service-ref="userService">
             </authentication-provider>
         </authentication-manager>
@@ -101,6 +114,7 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 		<beans:bean id="userService" class="lee.jun.ho.user.service.CustomUserDetailsService"/>
 
 
+<!-- <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean> -->
   
   
 </beans:beans>

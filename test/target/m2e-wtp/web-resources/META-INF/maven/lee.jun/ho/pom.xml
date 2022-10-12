@@ -280,14 +280,12 @@
         </dependency>
 		<!-- -->
 		
-		<!-- sql 로그 관련 -->		
-		<!-- 
+				
 		<dependency>
 		   <groupId>com.oracle.database.jdbc</groupId>
 		   <artifactId>ojdbc6</artifactId>
 		   <version>11.2.0.4</version>
 		</dependency>
-		-->
 		
 		<!-- 쿼리로그 호출 -->
 		 <dependency>  

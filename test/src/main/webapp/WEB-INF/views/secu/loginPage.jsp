@@ -26,7 +26,7 @@
 		</c:if>
 		
 		<input name="${_csrf.paraeterName}"	 type="hidden" value="${_csrf.token}"/>
-		<button type="submit">GO</button>
+		<button type="submit">login</button>
 	</form>
 	
 	
