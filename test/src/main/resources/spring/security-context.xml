@@ -58,7 +58,11 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
     	login-processing-url="/login"
     	login-page="/secu/loginPage"
     	default-target-url="/"
+    	authentication-failure-handler-ref="loginFailureHandler"
     />
+    
+	<!-- authentication-failure-handler-ref <beans:bean>태그로 등록한 값을 설정 -->    
+    
     
     <!-- 접근불가 페이지 커스터마이징 -->
     <access-denied-handler
@@ -116,10 +120,15 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
 		<!-- UserDetailsService , AuthenticationProvider 인터페이스를 구현해서 만든 클래스를 userService라는 이름으로 bean 등록한다. -->
 		<beans:bean id="userService" class="lee.jun.ho.user.service.CustomUserDetailsService"/>
 		<beans:bean id="userAuthProvider" class="lee.jun.ho.user.service.CustomAuthenticationProvider"/>
-
-
-<!-- <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean> -->
-  
+		
+		<!-- <bean></bean> 사용 경유 <property></property> 사용 -->
+		<!-- AuthenticationFailureHandler인터페이스 구현한 클래스를 bean으로 등록 -->
+		<beans:bean id="loginFailureHandler" class="lee.jun.ho.user.handler.LoginFailureHandler">
+            <beans:property name="loginidname" value="loginId"/>
+        	<beans:property name="loginpwdname" value="loginPwd"/>
+        	<beans:property name="errormsgname" value="ERRORMSG"/>
+        	<beans:property name="defaultFailureUrl" value="/secu/loginPage?error"/>
+        </beans:bean>
   
 </beans:beans>
 

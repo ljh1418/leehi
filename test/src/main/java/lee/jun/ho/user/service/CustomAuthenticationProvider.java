@@ -1,8 +1,10 @@
 package lee.jun.ho.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -38,8 +40,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		//화면에서 입력한 아이디로 DB에 있는 사용자의 정보를 UserDetails 형으로 가져와 user에 담는다
 		CustomUserDetails user = (CustomUserDetails) userDeSer.loadUserByUsername(username);
-		
 		log.debug("AuthenticationProvider loadUserByUsername :::::: 3");
+		
 		
 		//화면에서 입력한 비밀번호와 DB에서 가져온 비밀번호를 비교하는 로직
 		if(!matchPassword(password, user.getPassword())) {
@@ -48,10 +50,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		
 		//계정 활성화 여부를 확인하는 로직 AuthenticationProvider 인터페이스를 구현하게 되면 계정 잠금 , 계정 활성화 등은 여기에서 확인
-		if(!user.isEnabled()) {
-			log.debug("isEnabled :::::::: false!");
-			throw new BadCredentialsException(username);
+		//if(!user.isEnabled()) {
+		//	log.debug("isEnabled :::::::: false!");
+		//	throw new BadCredentialsException(username);
+		//}
+		
+		//AuthenticationProvider 인터페이스를 구현한 클래스의 Authentication()
+		if(!user.isEnabled() || !user.isCredentialsNonExpired()) {
+			log.info("들어온다1111111111");
+			throw new AuthenticationCredentialsNotFoundException(username);
 		}
+		
+		//UserDetailsService 인터페이스를 구현한 클래스의 loadUserByUsername() 메서드
+		if(user==null) {
+			log.info("들어온다2222222222");			
+			throw new InternalAuthenticationServiceException(username);
+		}
+		
 		
 		log.debug("matchPassword :::::::: true!");
 		

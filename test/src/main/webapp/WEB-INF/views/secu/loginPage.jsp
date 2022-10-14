@@ -27,6 +27,14 @@
 		
 		<input name="${_csrf.paraeterName}"	 type="hidden" value="${_csrf.token}"/>
 		<button type="submit">login</button>
+		
+		<c:if test="${not empty ERRORMSG}">
+					<font color="red">
+				  		<p>Your login attempt was not successful due to <br/>
+				  		${ERRORMSG }</p>
+					</font>
+		</c:if>
+		
 	</form>
 	
 	

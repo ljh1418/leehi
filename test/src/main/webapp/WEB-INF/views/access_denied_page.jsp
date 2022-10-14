@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>access_denied_page</h3>
-<h3>권한이 없습니다...접근불가!!!</h3>
+	<h3>access_denied_page</h3>
+	<h3>권한이 없습니다...접근불가!!!</h3>
 </body>
 </html>
