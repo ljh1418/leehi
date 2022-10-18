@@ -22,5 +22,22 @@ public class UserAuthDAO {
 		log.info("===============================================");
 		return sqlSession.selectOne("user.selectUserById", username);
 	}
+	
+	public void updateFailureCount(String username) {
+		log.info("updateFailureCount 들어옴 >>> : " + username);
+		sqlSession.update("user.updateFailureCount", username);
+	}
+	
+	public int checkFailureCount(String username) {
+		return sqlSession.selectOne("user.checkFailureCount", username);
+	}
+	
+	public void updateDisabled(String username) {
+		sqlSession.update("user.updateUnenabled", username);
+	}
+
+	public void updateFailureCountReset(String username) {
+		sqlSession.update("user.updateFailureCountReset", username);
+	}
 
 }

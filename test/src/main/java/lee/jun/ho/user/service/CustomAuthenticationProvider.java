@@ -19,9 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	
+	
 	@Autowired
 	private UserDetailsService userDeSer;
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {

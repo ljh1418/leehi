@@ -14,5 +14,17 @@
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="cacheSeconds" value="5"/>
 	</bean>
+	
+	<!-- 
+		MessageUtils 사용하기 위해 작업 
+		지정 하지 않으면 nullpointexception 발생
+	-->
+	<bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg ref="messageSource"/>
+    </bean>
+	
+	 <bean id="message" class="lee.jun.ho.user.message.MessageUtils">
+        <property name="messageSourceAccessor" ref="messageSourceAccessor"/>
+    </bean>
 		
 </beans>

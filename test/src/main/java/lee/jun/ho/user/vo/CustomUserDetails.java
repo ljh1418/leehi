@@ -22,6 +22,8 @@ public class CustomUserDetails implements UserDetails {
 	private String AUTHORITY;
 	private boolean ENABLED;
 	private String NAME;
+	private String EMAIL;
+	private int FAILURE_CNT;
 	
 	/*
 		 함수명						리턴타입									설명

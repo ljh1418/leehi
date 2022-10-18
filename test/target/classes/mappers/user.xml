@@ -3,6 +3,7 @@
 <mapper namespace="user">
 
  	<select id="selectUserById" resultType="lee.jun.ho.user.vo.CustomUserDetails">
+ 	/* selectUserById 들어옴 !!! */
 			SELECT
 				*
 			FROM
@@ -10,5 +11,43 @@
 			WHERE
 				ID=#{loginId}
 	</select>
+	
+	<update id="updateFailureCount">
+	/* updateFailureCount 들어옴 !!! */
+		UPDATE USERTEST
+		SET	FAILURE_CNT = FAILURE_CNT + 1
+		WHERE
+			ID = #{loginId}
+	</update>
+	
+	<select id="checkFailureCount" resultType="Integer">
+	/* checkFailureCount 들어옴 !!! */		
+		SELECT
+			FAILURE_CNT
+		FROM
+			USERTEST
+		WHERE
+			ID = #{loginId}
+	</select>
+	
+	<update id="updateUnenabled">
+	/* updateUnenabled 들어옴 !!! */
+		UPDATE
+			USERTEST
+		SET
+			ENABLED = '0'
+		WHERE
+			ID = #{loginId}
+	</update>
+	
+	<update id="updateFailureCountReset">
+	/* updateFailureCountReset */
+		UPDATE
+			USERTEST
+		SET
+			FAILURE_CNT = 0
+		WHERE
+			ID = #{loginId}
+	</update>
 	
  </mapper>

@@ -13,8 +13,8 @@
 	
 	<form action="/login" method="post">
 		
-		<input type="text" name="loginId" placeholder="example">
-		<input type="password" name="loginPwd" placeholder="password">
+		<input type="text" name="loginId" placeholder="example" value="${loginId}">
+		<input type="password" name="loginPwd" placeholder="password" value="${loginPwd}">
 		
 		
 		<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
@@ -25,15 +25,25 @@
 			</font>
 		</c:if>
 		
-		<input name="${_csrf.paraeterName}"	 type="hidden" value="${_csrf.token}"/>
-		<button type="submit">login</button>
 		
+		<!-- not empty = 객체 값이 비어있지 않을 경우 -->
+		<!--  security-context 에서 설정한 value 값으로 jstl 표현 -->
 		<c:if test="${not empty ERRORMSG}">
 					<font color="red">
 				  		<p>Your login attempt was not successful due to <br/>
 				  		${ERRORMSG }</p>
 					</font>
 		</c:if>
+		
+		<h3>username : ${username }</h3>
+		<h3>loginId : ${loginId }</h3>
+		
+		
+		
+		<input name="${_csrf.paraeterName}"	 type="hidden" value="${_csrf.token}"/>
+		<button type="submit">login</button>
+		
+		
 		
 	</form>
 	

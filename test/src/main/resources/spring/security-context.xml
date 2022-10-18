@@ -28,7 +28,9 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 <!-- http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd -->
 <!-- 추가 혹은 namepsace 에서 context 체크박스 선택 -->
 <!-- security 설정파일에서 SqlSessionTemplate 부분을 찾아야 해서 component 설정 -->
-<context:component-scan base-package="lee.jun.ho.user.dao" />
+
+<!-- <context:component-scan base-package="lee.jun.ho.user.dao" /> -->
+<context:component-scan base-package="lee.jun.ho.user"/>
 <!-- 발생원인 > 이쪽에서 설정해주지 않으면 lee.jun.ho.user.dao에 있는 클래스를 바라보는것이 불가능...
 ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter - An internal error occurred while trying to authenticate the user. -->
 
@@ -59,6 +61,7 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
     	login-page="/secu/loginPage"
     	default-target-url="/"
     	authentication-failure-handler-ref="loginFailureHandler"
+    	authentication-success-handler-ref="loginSuccessHandler"
     />
     
 	<!-- authentication-failure-handler-ref <beans:bean>태그로 등록한 값을 설정 -->    
@@ -123,12 +126,20 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
 		
 		<!-- <bean></bean> 사용 경유 <property></property> 사용 -->
 		<!-- AuthenticationFailureHandler인터페이스 구현한 클래스를 bean으로 등록 -->
-		<beans:bean id="loginFailureHandler" class="lee.jun.ho.user.handler.LoginFailureHandler">
+
+        
+        <beans:bean id="loginFailureHandler" class="lee.jun.ho.user.handler.LoginFailureHandler">
             <beans:property name="loginidname" value="loginId"/>
         	<beans:property name="loginpwdname" value="loginPwd"/>
         	<beans:property name="errormsgname" value="ERRORMSG"/>
         	<beans:property name="defaultFailureUrl" value="/secu/loginPage?error"/>
         </beans:bean>
+        
+		<beans:bean id="loginSuccessHandler" class="lee.jun.ho.user.handler.LoginSuccessHandler">
+        	<beans:property name="loginidname" value="loginId"/>
+        	<beans:property name="defaultUrl" value="/"/>
+        </beans:bean>
+        
   
 </beans:beans>
 
