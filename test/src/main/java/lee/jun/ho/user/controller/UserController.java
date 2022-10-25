@@ -46,7 +46,6 @@ public class UserController {
 		System.out.println("loginProcessing호출...");
 		System.out.println("error >>> : " + error);
 		
-		
 		return "home";
 	}
 	

@@ -64,6 +64,11 @@ public class HomeController {
 		return "sample/chart";
 	}
 	
+	@GetMapping("testPage.do")
+	public String testPage() {
+		return "test";
+	}
+	
 	@GetMapping("htmlFile.do")
 	public void htmlFile() throws IOException {
 		

@@ -11,23 +11,23 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class VerifyEmail {
-	 
-    public static void main(String[] args) {
+public class LocalMail {
+
+public static void main(String[] args) {
     	
     	//받는사람 + 내용
-        String recipient = "iljh2898@naver.com";
+        String recipient = "ljh1418@gensolsoft.com";
         String code = "내용을 입력해주세요...";
  
         // 1. 발신자의 메일 계정과 비밀번호 설정
-        final String user = "ljh1418@gmail.com";
-        final String password = "tmmloycishxlyusz";
+        final String user = "leemail@my.centos7.com";
+        final String password = "leemail";
         
  
         // 2. Property에 SMTP 서버 정보 설정
         Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", 465);
+        prop.put("mail.smtp.host", "127.0.0.1");
+        prop.put("mail.smtp.port", 25);
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.ssl.enable", "true");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -66,5 +66,4 @@ public class VerifyEmail {
         }
  
     }
- 
-}
+	}

@@ -30,6 +30,7 @@ always-use-default-target 			: 무조건 핸들러가 지정한 페이지로 이
 <!-- security 설정파일에서 SqlSessionTemplate 부분을 찾아야 해서 component 설정 -->
 
 <!-- <context:component-scan base-package="lee.jun.ho.user.dao" /> -->
+<!-- 프로젝트가 올라갈때 경로에 있는 것들을 읽어서 올라감 -->
 <context:component-scan base-package="lee.jun.ho.user"/>
 <!-- 발생원인 > 이쪽에서 설정해주지 않으면 lee.jun.ho.user.dao에 있는 클래스를 바라보는것이 불가능...
 ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter - An internal error occurred while trying to authenticate the user. -->
@@ -72,22 +73,44 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
 		error-page="/access_denied_page"
 	/>
 	
-
 	
 	<!--  
 	로그아웃관련
 	logout-url			: 로그아웃 처리에 대한 URL. form태그의 action 속성에 지정한 값. (default: POST /logout)
 	logout-success-url 	: 로그아웃 성공시, 이동할 URL. (default: /login?logout)
 	invalidate-session 	: 로그아웃 시, session을 무효화할 지 선택. (default: true)
-	delete-cookies 		: 로그아웃 성공시, 삭제할 쿠키 이름 지정
+	delete-cookies 		: 로그아웃 성공시, 삭제할 쿠키 이름 지정 >>> rememberme 기능에서 로그아웃 하면 없애기
 	success-handler-ref : 로그아웃 성공시, logout-success-url 이 아닌 핸들러로 리다이렉트 
 	-->
 	
 	<logout
     	logout-url="/logout"
     	invalidate-session="true"
+    	delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
     	logout-success-url="/"
     />
+    
+    
+    <!-- 브라우저 동시접속 차단 -->
+    <!-- 
+    	invalid-session-url : 세션이 끊겼을때 이동 할 페이지
+    	max-sessions : 최대 허용 가능 중복 세션
+    	expired-url : 중복 로그인이 일어났을 경우 이동 할 페이지
+	    
+    -->
+	<session-management invalid-session-url="/login">
+		<concurrency-control max-sessions="1" expired-url="/login"/>
+	</session-management>
+	
+	
+	<!-- 자동로그인 rememberme 
+		현재 설정한 remember-me의 기능에서는 key 설정해줄 필요가 없음
+		세션 시간만 설정하였음
+	-->
+	<!-- <remember-me key="uniqueAndSecret" token-validity-seconds="600" /> -->
+	<remember-me token-validity-seconds="600" />
+    
+    
 	
 
     
@@ -113,6 +136,7 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 		<!-- 유저 정보를 가져오는 클래스를 설정하는 곳이다. userService는  아래의 bean id의 클래스를 뜻한다 -->
 		
+		<!-- 디비연동 -->
 		<!-- ref 와 user-service-ref의 차이는 ???       -->  
         <authentication-manager>
         	<authentication-provider ref="userAuthProvider"/>
@@ -139,6 +163,8 @@ ERROR: org.springframework.security.web.authentication.UsernamePasswordAuthentic
         	<beans:property name="loginidname" value="loginId"/>
         	<beans:property name="defaultUrl" value="/"/>
         </beans:bean>
+        
+        <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
         
   
 </beans:beans>

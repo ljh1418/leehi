@@ -13,8 +13,8 @@
 	
 	<form action="/login" method="post">
 		
-		<input type="text" name="loginId" placeholder="example" value="${loginId}">
-		<input type="password" name="loginPwd" placeholder="password" value="${loginPwd}">
+		<input type="text" name="loginId" placeholder="example" value="member">
+		<input type="password" name="loginPwd" placeholder="password" value="member">
 		
 		
 		<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
@@ -43,6 +43,8 @@
 		<input name="${_csrf.paraeterName}"	 type="hidden" value="${_csrf.token}"/>
 		<button type="submit">login</button>
 		
+		<!-- name을 _spring_security_remember_me 지정하지 않으면 SPRING_SECURITY_REMEMBER_ME_COOKIE 생성못함 -->
+		<input type="checkbox"  id = "remember_me" name ="_spring_security_remember_me">로그인 유지<br>
 		
 		
 	</form>

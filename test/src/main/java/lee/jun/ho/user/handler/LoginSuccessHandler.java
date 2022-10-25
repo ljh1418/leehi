@@ -44,6 +44,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		userSer.resetFailureCnt(username);
 		
 		
+		log.info("@@@@@111111");
+		
 		//resultRedirectStrategy 메서드 호출
 		resultRedirectStrategy(request, response, authentication);
 		
@@ -56,6 +58,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 	protected void resultRedirectStrategy(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException{
+		
+		log.info("@@@@@2222");
 		
 		//RequestCache 객체를 통해 SavedRequest 객체를 가져온다.
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
