@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ChartVo {
 
-	//
+	//////
 	String test1;
 	String test2;
 	
