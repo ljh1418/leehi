@@ -27,10 +27,10 @@ public static void main(String[] args) {
         // 2. Property에 SMTP 서버 정보 설정
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "127.0.0.1");
-        prop.put("mail.smtp.port", 25);
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.enable", "true");
-        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        //prop.put("mail.smtp.port", 25);
+        //prop.put("mail.smtp.auth", "true");
+        //prop.put("mail.smtp.ssl.enable", "true");
+        //prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         System.out.println("prop >>> : " + prop);
  
         // 3. SMTP 서버정보와 사용자 정보를 기반으로 Session 클래스의 인스턴스 생성

@@ -49,20 +49,6 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("management")
-	public String management() {
-		return "sample/management";
-	}
-	
-	@GetMapping("technology")
-	public String technology() {
-		return "sample/technology";
-	}
-	
-	@GetMapping("chart")
-	public String doAll() {
-		return "sample/chart";
-	}
 	
 	@GetMapping("testPage.do")
 	public String testPage() {

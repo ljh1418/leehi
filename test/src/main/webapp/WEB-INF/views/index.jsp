@@ -17,6 +17,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <script src='resources/js/prototype.js'></script> -->
+<script type="text/javascript" src="<c:url value='resources/js/prototype.js'/>"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <script type="text/javascript">
@@ -64,7 +66,8 @@
 	
 	
 	$(document).ready(function(){
-	
+		
+		//
 		$("#ajaxBtn").on("click",function(){
 			//배열객체
 		    $.ajax({
@@ -83,6 +86,7 @@
 			
 		})
 		
+		//
 		$("#ajaxBtn2").on("click",function(){
 		//단일객체
 	    $.ajax({
@@ -102,6 +106,24 @@
            })
 		})
 		
+		//에이작스 차트페이지이동
+// 		$("#chartId").on("click",function(){
+// 		    $.ajax({
+//             	url : 'chartTest.do',
+//             	type : 'get',
+//             	success : function(data){
+//             		console.log("차트페이지이동 data : ",data);
+//             		//var url = "/chartTest.do";
+//             		//location.replace(url);
+//             		//location.href="chartTest.do";
+//             	},
+//             	error : function(request,status,error){
+//             		console.log("실패...");
+//             		console.log("error : ",error)
+//             	}
+//             })
+// 		})
+		
 	});
 	
 	function addHtml(data){
@@ -116,7 +138,6 @@
 		$("#ajaxAppend").append(trHtml);
 	}
 	
-
 	
 </script>
 <body>
@@ -152,7 +173,9 @@
 <h3>에이작스 버튼</h3>
 <button type="button" id="ajaxBtn">ajax</button>
 <button type="button" id="ajaxBtn2">ajax2</button>
-
+<button type="button" id="chartIdMap" onClick="location.href='/chartTestMap.do?test1=leeMap&test2=junhoMap'">chartMap</button>
+<button type="button" id="chartIdVo" onClick="location.href='/chartTestVo.do?test1=leeVo&test2=junhVo'">chartVo</button>
+<!--  -->
 <table id="ajaxTable">
 	
 </table>
