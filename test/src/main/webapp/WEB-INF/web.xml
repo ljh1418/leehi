@@ -39,12 +39,29 @@
 -->
 
 <filter>
-  <filter-name>springSecurityFilterChain</filter-name>
-  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  <!-- 스프링시큐리티 관련 -->
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  	
+  	<!-- 한글꺠짐 처리 -->
+	<!-- <filter-name>encoding-filter</filter-name> 
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+	<init-param> 
+		<param-name>encoding</param-name> 
+		<param-value>UTF-8</param-value> 
+	</init-param> -->
+	
 </filter>
 <filter-mapping>
-  <filter-name>springSecurityFilterChain</filter-name>
-  <url-pattern>/*</url-pattern>
+
+	<!-- 스프링시큐리티 관련 -->
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+
+	<!-- 한글꺠짐 처리 -->
+  	<!-- <filter-name>encoding-filter</filter-name> 
+	<url-pattern>/*</url-pattern> -->
+	
 </filter-mapping>
 
 
@@ -52,6 +69,27 @@
 <listener>
 	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 </listener> 
+
+
+<!--  문자 인코딩 한글깨짐 처리 -->
+<filter>
+  <filter-name>encodingFilter</filter-name>
+  <filter-class>
+    org.springframework.web.filter.CharacterEncodingFilter
+  </filter-class>
+  <init-param>
+    <param-name>encoding</param-name>
+    <param-value>UTF-8</param-value>
+  </init-param>
+  <init-param>
+    <param-name>forceEncoding</param-name>
+    <param-value>true</param-value>
+  </init-param>
+</filter>
+<filter-mapping>
+  <filter-name>encodingFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping>
 
 	
 

@@ -1,18 +1,20 @@
 package lee.jun.ho.board.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gensol.docuextracter.sdt.api.ExtractApi;
 import kr.co.gensol.docuextracter.sdt.api.vo.XInputExtractVo;
 import kr.co.gensol.docuextracter.sdt.api.vo.XOutputExtractVo;
 import kr.co.gensol.docuextracter.sdt.api.vo.XTocInfoVo;
 import lee.jun.ho.board.service.BoardService;
+import lee.jun.ho.board.vo.BoardVo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -36,6 +38,41 @@ public class BoardController {
 		return "home";
 		
 	}
+	
+	@GetMapping("/board/boardList.do")
+	public ModelAndView boardList() throws Exception{
+		ModelAndView mav = new ModelAndView();
+		List<BoardVo> boardList = boardService.boardList();
+		mav.setViewName("/board/boardList");
+		mav.addObject("boardList", boardList);
+		return mav;
+	}
+	
+	@GetMapping("/board/test.do")
+	public String test1() throws Exception{
+		System.out.println("q11111111111");
+		return "board/boardList";
+	}
+	
+	
+	//작성페이지 이동
+	@GetMapping("/board/boardWriterPage.do")
+	public String boardInsertPage() throws Exception{
+		System.out.println("boardInsertPage 들어옴!!!");
+		return "board/boardWriter";
+	}
+	
+	
+	@PostMapping("/board/boardWriter.do")
+	public ModelAndView boardInsert(BoardVo boardVo, ModelAndView mav) throws Exception{
+		log.info("boardWriter 들어옴 !!!");
+		log.info("board vo ::: " + boardVo);
+		boardService.boardInsert(boardVo);
+		mav.setViewName("redirect:/board/boardList.do");
+		return mav;
+	}
+	
+	
 	
 	@GetMapping("test.do")
 	public void test() throws Exception{

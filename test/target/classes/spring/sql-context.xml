@@ -50,8 +50,13 @@
 
   
   	<!-- SqlSessionFactory 객체 주입 -->
+  	<!-- 
+	  	마이바티스 설정 하는 부분  java.sql.SQLException: 부적합한 열 유형: 1111 에러 발생해... mybatis-config.xml 존재했으나 
+	  	바라볼수 있는 경로가 존재하지 않았음 <property name="configLocation" value="classpath:/mybatis-config.xml" /> 
+  	-->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:/mybatis-config.xml" />
         <property name="mapperLocations" value="classpath*:/mappers/*.xml" />
     </bean>
     

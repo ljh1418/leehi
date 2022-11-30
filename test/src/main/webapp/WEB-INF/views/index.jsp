@@ -142,6 +142,12 @@
 </script>
 <body>
 <h1>home.jsp</h1>
+
+<h3>메뉴 부분</h3>
+<div>
+	<a href="/board/boardList.do">게시판</a>
+</div>
+
 <button type="button" onclick="location.href='testPage.do'">testPage</button>
 <div style="border:1px solid ;">
 	
