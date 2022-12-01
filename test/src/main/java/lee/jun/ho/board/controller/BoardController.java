@@ -3,6 +3,8 @@ package lee.jun.ho.board.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,12 +41,29 @@ public class BoardController {
 		
 	}
 	
+	//게시판 리스트
 	@GetMapping("/board/boardList.do")
 	public ModelAndView boardList() throws Exception{
 		ModelAndView mav = new ModelAndView();
 		List<BoardVo> boardList = boardService.boardList();
 		mav.setViewName("/board/boardList");
 		mav.addObject("boardList", boardList);
+		return mav;
+	}
+	
+	//게시판 상세보기
+	@GetMapping("/board/boardWrite.do")
+	public ModelAndView boardWrite(BoardVo boardVo, HttpSession session) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		
+		String boardNum  = boardVo.getBoardNum();
+		log.info("boardNum ::: " + boardNum);
+		
+		if(boardVo.getBoardNum() != null) {
+			log.info("게시글 수정...");
+			//조회수
+			boardService.boardViewHit(boardNum,session);
+		}
 		return mav;
 	}
 	

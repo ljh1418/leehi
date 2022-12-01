@@ -2,6 +2,8 @@ package lee.jun.ho.board.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import lee.jun.ho.board.vo.BoardVo;
 
 public interface BoardService{
@@ -10,6 +12,8 @@ public interface BoardService{
 	
 	public void boardInsert(BoardVo boardVo) throws Exception;
 
-	public List<BoardVo> boardList();
+	public List<BoardVo> boardList() throws Exception;
+
+	public void boardViewHit(String boardNum, HttpSession session) throws Exception;
 	
 }

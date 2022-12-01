@@ -40,7 +40,7 @@
 
 </head>
 <body>
-	<h1>boardList 페이지 입니다.</h1>
+	<h1>게시판 목록</h1>
 	<button type="button" id="boardInsert">글작성</button>
 	
 	<table border="1" width="600px">
@@ -54,7 +54,9 @@
 	    <c:forEach var="boardList" items="${boardList}">
 		    <tr>
 		        <td>${boardList.boardNum}</td>
-		        <td><a href="/board/view.do?bno=${boardList.boardNum}">${boardList.boardTitle}</a></td>
+		        <td>
+		        	<a href="/board/boardWrite.do?boardNum=${boardList.boardNum}">${boardList.boardTitle}</a>
+		        </td>
 		        <td>${boardList.boardWriter}</td>
 		        <td>
 		            <!-- 원하는 날짜형식으로 출력하기 위해 fmt태그 사용 -->
