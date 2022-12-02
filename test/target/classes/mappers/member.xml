@@ -11,5 +11,58 @@
 			MEMBER
 		ORDER BY MEMBER_NUM DESC
 	</select>
+	
+	<!-- parameterType="lee.jun.ho.member.vo.MemberVo" -->
+	
+	<insert id="memberWriter">
+		/*memberInsert*/
+		INSERT INTO MEMBER(
+			MEMBER_NUM, 
+			MEMBER_ID, 
+			MEMBER_NAME, 
+			MEMBER_PW, 
+			MEMBER_EMAIL,
+			MEMBER_REGDATE
+		)VALUES (
+		(
+			SELECT 
+				NVL(MAX(MEMBER_NUM), 0) + 1 
+			FROM 
+				MEMBER
+		), 
+		#{memberId}, 
+		#{memberName}, 
+		#{memberPw}, 
+		#{memberEmail},
+		SYSDATE
+		)
+	</insert>
+	
+	<!-- select 쿼리는 대부분 return 값이 존재 > 파라미터 결과값을 받는곳이 필요함 -->
+	<select id="memberView" resultType="lee.jun.ho.member.vo.MemberVo">
+		SELECT 
+			*
+		FROM 
+			MEMBER
+		WHERE
+			MEMBER_NUM = ${memberNum}
+	</select>	
+	
+	
+	<update id="memberUpdate" >
+		/*memberUpdate*/
+		UPDATE 
+			MEMBER
+		SET
+			MEMBER_ID = #{memberId}
+		,
+			MEMBER_PW = #{memberPw}
+		,
+			MEMBER_NAME = #{memberName}
+		,
+			MEMBER_EMAIL = #{memberEmail}
+		WHERE
+			MEMBER_NUM = #{memeberNum}
+	</update>
 
 </mapper>

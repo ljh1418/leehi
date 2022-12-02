@@ -42,10 +42,19 @@
 			, 	#{boardTitle}
 			, 	#{boardContent}
 			, 	#{boardWriter}
-			,	#{boardViewcnt}
+			,	DEFAULT
 			,   SYSDATE
 		)
 	</insert>
+	
+	<select id="boardView" resultType="lee.jun.ho.board.vo.BoardVo">
+        SELECT 
+        	* 
+        FROM 
+        	MP_BOARD 
+        WHERE 
+        	BOARD_NUM = #{boardNum}
+    </select>
    		
 	<!-- 수정 --> 
 	<update id="boardUpdate">
@@ -67,10 +76,23 @@
 	</delete>
 	
 	<update id="boardViewHit">
+		/*boardViewHit*/
 		UPDATE 
 			MP_BOARD 
 		SET 
 			BOARD_VIEWCNT = BOARD_VIEWCNT + 1
+		WHERE
+			BOARD_NUM = #{boardNum}
+	</update>
+	
+	<update id="updateBoard">
+		/*updateBoard*/
+		UPDATE 
+			MP_BOARD 
+		SET
+			BOARD_TITLE = #{boardTitle}
+		,
+			BOARD_CONTENT = #{boardContent}
 		WHERE
 			BOARD_NUM = #{boardNum}
 	</update>

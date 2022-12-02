@@ -19,7 +19,8 @@
 <title>Insert title here</title>
 <!-- <script src='resources/js/prototype.js'></script> -->
 <script type="text/javascript" src="<c:url value='resources/js/prototype.js'/>"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <script type="text/javascript">
 
@@ -142,9 +143,21 @@
 </script>
 <body>
 <h1>home.jsp</h1>
+${sessionScope.memberInfo}
+<c:choose> 
+	<c:when test="${sessionScope.memberInfo == null}">
+	    <a href="/login/loginPage.do">로그인</a>
+	</c:when>
+	<c:otherwise>
+	   <a href="/login/logout.do">로그아웃</a>
+	</c:otherwise>
+</c:choose>
+
+<h2>${sessionScope.memberInfo.memberName}(${sessionScope.memberInfo.memberId})님 환영합니다.</h2>
 
 <h3>메뉴 부분</h3>
 <div>
+	<a href="/memberinfo/memberList.do">회원목록</a>
 	<a href="/board/boardList.do">게시판</a>
 </div>
 

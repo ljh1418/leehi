@@ -41,4 +41,14 @@ public class BoardDao {
 		sql.update("board.boardViewHit", boardNum);
 	}
 
+
+	public BoardVo boardView(BoardVo boardVo) {
+		return sql.selectOne("board.boardView",boardVo);
+	}
+
+
+	public void updateBoard(BoardVo boardVo) {
+		sql.update("board.updateBoard", boardVo);
+	}
+
 }

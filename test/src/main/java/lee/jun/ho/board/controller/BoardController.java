@@ -35,10 +35,7 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
   		}
-		
-		
 		return "home";
-		
 	}
 	
 	//게시판 리스트
@@ -54,6 +51,7 @@ public class BoardController {
 	//게시판 상세보기
 	@GetMapping("/board/boardWrite.do")
 	public ModelAndView boardWrite(BoardVo boardVo, HttpSession session) throws Exception{
+		log.info("boardWrite 들어옴 >>> : " + boardVo);
 		ModelAndView mav = new ModelAndView();
 		
 		String boardNum  = boardVo.getBoardNum();
@@ -63,13 +61,22 @@ public class BoardController {
 			log.info("게시글 수정...");
 			//조회수
 			boardService.boardViewHit(boardNum,session);
+			
+			// 뷰에 전달할 데이터
+	        mav.addObject("boardView", boardService.boardView(boardVo));
+			mav.addObject("actionType","/board/update.do");
+			mav.setViewName("/board/boardView");
+		}else {
+			log.info("신규 글작성!!!");
+			mav.addObject("actionType","/board/insert.do");
+			mav.setViewName("/board/boardWriter");
 		}
 		return mav;
 	}
 	
 	@GetMapping("/board/test.do")
 	public String test1() throws Exception{
-		System.out.println("q11111111111");
+		System.out.println("11111111111");
 		return "board/boardList";
 	}
 	
@@ -88,6 +95,20 @@ public class BoardController {
 		log.info("board vo ::: " + boardVo);
 		boardService.boardInsert(boardVo);
 		mav.setViewName("redirect:/board/boardList.do");
+		return mav;
+	}
+	
+	//게시글 수정
+	@PostMapping("/board/boardUpdate.do")
+	public ModelAndView boardUpdate(BoardVo boardVo, ModelAndView mav) throws Exception{
+		log.info("boardUpdate 들어옴 !!!");
+		log.info("board vo ::: " + boardVo);
+		
+		boardService.updateBoard(boardVo);
+		mav.setViewName("redirect:/board/boardList.do");
+		
+		//setViewName 지정하지 않으면 맵핑 url 그대로 jsp 이동
+		
 		return mav;
 	}
 	

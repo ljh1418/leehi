@@ -15,5 +15,11 @@ public interface BoardService{
 	public List<BoardVo> boardList() throws Exception;
 
 	public void boardViewHit(String boardNum, HttpSession session) throws Exception;
+
+	public BoardVo boardView(BoardVo boardVo);
+
+	public void updateBoard(BoardVo boardVo);
+
+	
 	
 }

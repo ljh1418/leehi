@@ -8,4 +8,12 @@ public interface MemberService {
 
 	public List<MemberVo> memberList() throws Exception;
 
+	public void memberWriterInsert(MemberVo memberVo);
+
+	public void memberUpdate(MemberVo memberVo);
+
+	//회원 상세보기
+	public MemberVo memberView(MemberVo memberVo);
+
+
 }

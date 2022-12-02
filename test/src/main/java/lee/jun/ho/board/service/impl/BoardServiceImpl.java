@@ -63,4 +63,17 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
+	@Override
+	public BoardVo boardView(BoardVo boardVo) {
+		return boardDao.boardView(boardVo);
+	}
+
+
+	@Override
+	public void updateBoard(BoardVo boardVo) {
+		boardDao.updateBoard(boardVo);
+		
+	}
+
+
 }

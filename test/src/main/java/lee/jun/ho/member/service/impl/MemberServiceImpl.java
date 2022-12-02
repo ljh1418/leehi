@@ -21,4 +21,22 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberList();
 	}
 
+	@Override
+	public void memberWriterInsert(MemberVo memberVo) {
+		memberDao.memberWriterInsert(memberVo);
+	}
+	
+	//회원 상세보기
+	@Override
+	public MemberVo memberView(MemberVo memberVo) {
+		return memberDao.memberView(memberVo);
+	}
+	
+	//회원수정
+	@Override
+	public void memberUpdate(MemberVo memberVo) {
+		memberDao.memberUpdate(memberVo);
+	}
+
+
 }
