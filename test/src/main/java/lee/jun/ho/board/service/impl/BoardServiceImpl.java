@@ -275,7 +275,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		for(int i=0; i<fileArr.length; i++) {
 			log.info("fileArr ::: " + fileArr[i]);
-			////배열데이터를 맵에 넣어보기 mapData.put(boardNum, fileArr);
+			//////배열데이터를 맵에 넣어보기 mapData.put(boardNum, fileArr);
 			
 		}
 		
