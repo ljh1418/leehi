@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import lee.jun.ho.member.dao.MemberDao;
 import lee.jun.ho.member.service.MemberService;
 import lee.jun.ho.member.vo.MemberVo;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService{
 	
@@ -19,11 +21,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberVo> memberList() throws Exception {
 		return memberDao.memberList();
-	}
-
-	@Override
-	public void memberWriterInsert(MemberVo memberVo) {
-		memberDao.memberWriterInsert(memberVo);
 	}
 	
 	//회원 상세보기
@@ -37,6 +34,21 @@ public class MemberServiceImpl implements MemberService{
 	public void memberUpdate(MemberVo memberVo) {
 		memberDao.memberUpdate(memberVo);
 	}
+	
+	//회원등록
+	@Override
+	public void memberInsert(MemberVo memberVo) {
+		String memberNumSeq = memberDao.memberNumSeq();
+		log.info("MemberServiceImpl memberInsert ::: " + memberNumSeq);
+		memberVo.setMemberNum(memberNumSeq);
+		memberDao.memberInsert(memberVo);
+	}
+
+	@Override
+	public void memberDelete(String memberNum) {
+		memberDao.memberDelete(memberNum);
+	}
+
 
 
 }

@@ -90,6 +90,8 @@
 		//
 		$("#ajaxBtn2").on("click",function(){
 		//단일객체
+		
+		//dataType: 리턴하는 데이터 타입 예) json,xml,html,scrirpt,text ..
 	    $.ajax({
            	url : 'ajaxTestList2.do',
            	type : 'post',
@@ -142,63 +144,65 @@
 	
 </script>
 <body>
-<h1>home.jsp</h1>
-${sessionScope.memberInfo}
-<c:choose> 
-	<c:when test="${sessionScope.memberInfo == null}">
-	    <a href="/login/loginPage.do">로그인</a>
-	</c:when>
-	<c:otherwise>
-	   <a href="/login/logout.do">로그아웃</a>
-	</c:otherwise>
-</c:choose>
+	<h1>home.jsp</h1>
+	${sessionScope.memberInfo}
+	<c:choose> 
+		<c:when test="${sessionScope.memberInfo == null}">
+		    <a href="/login/loginPage.do">로그인</a>
+		</c:when>
+		<c:otherwise>
+		   <a href="/login/logout.do">로그아웃</a>
+		</c:otherwise>
+	</c:choose>
 
-<h2>${sessionScope.memberInfo.memberName}(${sessionScope.memberInfo.memberId})님 환영합니다.</h2>
+	<h2>${sessionScope.memberInfo.memberName}(${sessionScope.memberInfo.memberId})님 환영합니다.</h2>
 
-<h3>메뉴 부분</h3>
-<div>
-	<a href="/memberinfo/memberList.do">회원목록</a>
-	<a href="/board/boardList.do">게시판</a>
-</div>
+	<h3>메뉴 부분</h3>
+	<div>
+		<a href="/memberinfo/memberList.do">회원목록</a>
+		<a href="/board/boardList.do">게시판</a>
+	</div>
 
-<button type="button" onclick="location.href='testPage.do'">testPage</button>
-<div style="border:1px solid ;">
-	
-		<sec:authorize access="isAnonymous()">
-			<h5>
-				<a href='<c:url value="/secu/loginPage"/>'>LOGIN</a> 로그인 해주세요.
-			</h5>
-	    </sec:authorize>
+	<button type="button" onclick="location.href='testPage.do'">testPage</button>
+	<div style="border:1px solid ;">
 		
-		<!-- isAuthenticated() 인증된 이용자 일때 로그아웃 버튼을 보여줌 -->
-		<sec:authorize access="isAuthenticated()">
-          	<h5><%=name %>님, 반갑습니다.</h5>
-	        <form action="/logout" method="POST">
-	                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	                <button type="submit">LOGOUT</button>
-	        </form>
-          </sec:authorize>
-</div>
+			<sec:authorize access="isAnonymous()">
+				<h5>
+					<a href='<c:url value="/secu/loginPage"/>'>LOGIN</a> 로그인 해주세요.
+				</h5>
+		    </sec:authorize>
+			
+			<!-- isAuthenticated() 인증된 이용자 일때 로그아웃 버튼을 보여줌 -->
+			<sec:authorize access="isAuthenticated()">
+	          	<h5><%=name %>님, 반갑습니다.</h5>
+		        <form action="/logout" method="POST">
+		                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                <button type="submit">LOGOUT</button>
+		        </form>
+	          </sec:authorize>
+	</div>
 
 
-<div class="container text-center col-2">
-	<a href='<c:url value="/page"/>' role="button">GUEST</a>
-	<a href='<c:url value="/user/page"/>' role="button">USER</a>
-	<a href='<c:url value="/member/page"/>' role="button">MEMBER</a>
-	<a href='<c:url value="/admin/page"/>' role="button">ADMIN</a>
-</div>
+	<div class="container text-center col-2">
+		<a href='<c:url value="/page"/>' role="button">GUEST</a>
+		<a href='<c:url value="/user/page"/>' role="button">USER</a>
+		<a href='<c:url value="/member/page"/>' role="button">MEMBER</a>
+		<a href='<c:url value="/admin/page"/>' role="button">ADMIN</a>
+	</div>
 
-
-<h3>에이작스 버튼</h3>
-<button type="button" id="ajaxBtn">ajax</button>
-<button type="button" id="ajaxBtn2">ajax2</button>
-<button type="button" id="chartIdMap" onClick="location.href='/chartTestMap.do?test1=leeMap&test2=junhoMap'">chartMap</button>
-<button type="button" id="chartIdVo" onClick="location.href='/chartTestVo.do?test1=leeVo&test2=junhVo'">chartVo</button>
+	<h3>에이작스 버튼</h3>
+	<button type="button" id="ajaxBtn">ajax</button>
+	<button type="button" id="ajaxBtn2">ajax2</button>
+	<button type="button" id="chartIdMap" onClick="location.href='/chartTestMap.do?test1=leeMap&test2=junhoMap'">chartMap</button>
+	<button type="button" id="chartIdVo" onClick="location.href='/chartTestVo.do?test1=leeVo&test2=junhVo'">chartVo</button>
 <!--  -->
+
 <table id="ajaxTable">
-	
 </table>
-<div id="ajaxAppend"><span id=sapnId>추가목록이 없습니다.</span></div>
+
+<div id="ajaxAppend">
+	<span id=sapnId>추가목록이 없습니다.</span>
+</div>
 
 </body>
 </html>

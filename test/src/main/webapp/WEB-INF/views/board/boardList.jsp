@@ -5,6 +5,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+		ul {
+			list-style: none;
+			width : 30%;
+			display: inline-block;
+		}
+		
+		li {
+			float: left;
+			margin-left : 5px;
+		}
+</style>
 <!-- <meta charset="UTF-8"> -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -29,7 +41,7 @@
 		
 		$("#boardInsert").on("click",function(){
 			console.log("글작성 버튼 누름!!!");
-			location.href="/board/boardWriterPage.do";
+			location.href="/board/boardWrite.do";
 		})
 			
 		
@@ -41,10 +53,16 @@
 
 </head>
 <body>
-	<h1>게시판 목록</h1>
+	<div>
+		<a href="/main.do">
+			<h1>MAIN</h1>
+		</a>
+	</div>
+	
+	<h2>게시판 목록</h2>
 	<button type="button" id="boardInsert">글작성</button>
 	
-	<table border="1" width="600px">
+	<table border="1" width="1000px">
 	    <tr>
 	        <th>번호</th>
 	        <th>제목</th>
@@ -64,9 +82,23 @@
 		            <fmt:formatDate value="${boardList.boardRegdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		        </td>
 		        <td>${boardList.boardViewcnt}</td>
-		    </tr>    
+		    </tr>
 	    </c:forEach>
 	</table>
+	<%-- pageMaker : ${pageMaker} --%>
+	<ul>
+		<c:if test="${pageMaker.prev}">
+			<li><a href="/board/boardList.do?page=${pageMaker.startPage - 1}">이전</a></li>
+		</c:if> 
+		 
+		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			<li><a href="/board/boardList.do?page=${idx}">${idx}</a></li>
+		</c:forEach>
+		   
+		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+			<li><a href="/board/boardList.do?page=${pageMaker.endPage + 1}">다음</a></li>
+		</c:if> 
+	</ul>
 	
 </body>
 </html>

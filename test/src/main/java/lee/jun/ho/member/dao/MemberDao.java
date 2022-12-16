@@ -33,7 +33,24 @@ public class MemberDao {
 	
 	//회원 업데이트
 	public void memberUpdate(MemberVo memberVo) {
+		log.info("MemberDao memberUpdate memberVo ::: " + memberVo);
 		sql.update("member.memberUpdate",memberVo);
+	}
+	
+	//회원번호 생성
+	public String memberNumSeq() {
+		return sql.selectOne("member.memberSeqNum");
+	}
+
+	//회원생성
+	public void memberInsert(MemberVo memberVo) {
+		sql.insert("member.memberInsert",memberVo);
+	}
+	
+	//회원삭제
+	public void memberDelete(String memberNum) {
+		sql.delete("member.memberDelete",memberNum);
+		
 	}
 	
 	

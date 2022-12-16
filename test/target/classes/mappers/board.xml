@@ -13,11 +13,48 @@
 			,	'손오공'
 		)	
 	</insert> -->
+	
+	<!-- 작성번호 조회 -->
+	<!-- 데이터타입이 String 형이기 떄문에 resultType 또한 스트링으로 해야함 -->
+	<select id="boardNumSeq" resultType="java.lang.String">
+		/*boardNumSelect*/
+		SELECT 
+			NVL(MAX(BOARD_NUM), 0)+1
+		FROM 
+			MP_BOARD
+	</select>
+	
 		
 	<select id="boardList" resultType="lee.jun.ho.board.vo.BoardVo">
 		/*boardList*/
-		SELECT 
-				BOARD_NUM
+
+	select BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, BOARD_VIEWCNT, BOARD_REGDATE
+       from (
+           select BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, BOARD_VIEWCNT, BOARD_REGDATE,
+               row_number() over(order by BOARD_NUM desc) as rNum
+           from MP_BOARD
+     ) mb
+    where rNum between #{rowStart} and #{rowEnd}
+        order by BOARD_NUM desc
+		
+		<!-- 
+			*MySQL Version*
+			SELECT
+					ROWNUM 
+				,	BOARD_NUM
+				,	BOARD_TITLE
+				,	BOARD_CONTENT
+				,	BOARD_WRITER
+				,	BOARD_VIEWCNT
+				,	BOARD_REGDATE
+			FROM 
+				MP_BOARD
+			ORDER BY BOARD_NUM
+			LIMIT #{pageStart}, #{perPageNum} 
+		-->
+	<!-- 	SELECT 
+				ROWNUM
+			,	BOARD_NUM
 			,	BOARD_TITLE
 			,	BOARD_CONTENT
 			,	BOARD_WRITER
@@ -25,7 +62,13 @@
 			,	BOARD_REGDATE
 		FROM 
 			MP_BOARD
-		ORDER BY BOARD_NUM DESC
+		WHERE		
+			ROWNUM &gt;= #{page} AND ROWNUM &lt;= #{perPageNum} 
+		ORDER BY BOARD_NUM DESC -->
+		
+		
+
+		
 	</select>
 	
 	<insert id="boardInsert" parameterType="lee.jun.ho.board.vo.BoardVo">
@@ -38,7 +81,7 @@
 			,	BOARD_VIEWCNT
 			,	BOARD_REGDATE
 		)VALUES(    
-				MP_BOARD_SEQ.NEXTVAL
+				#{boardNum}
 			, 	#{boardTitle}
 			, 	#{boardContent}
 			, 	#{boardWriter}
@@ -56,25 +99,7 @@
         	BOARD_NUM = #{boardNum}
     </select>
    		
-	<!-- 수정 --> 
-	<update id="boardUpdate">
-		UPDATE 
-			MP_BOARD 
-		SET
-			BOARD_TITLE = #{boardTitle},
-			BOARD_CONTENT = #{boardContent}
-		WHERE
-			BOARD_NUM = #{boardNum}
-	</update>
   		
-  		
-	<delete id="boardDelete">
-		DELETE 
-			FROM MP_BOARD
-		WHERE
-			BOARD_NUM = #{boardNum}
-	</delete>
-	
 	<update id="boardViewHit">
 		/*boardViewHit*/
 		UPDATE 
@@ -96,5 +121,22 @@
 		WHERE
 			BOARD_NUM = #{boardNum}
 	</update>
+	
+	<delete id="boardDelete">
+		/*boardDelete*/
+		DELETE FROM
+			MP_BOARD
+		WHERE
+			BOARD_NUM = #{boardNum}
+	</delete>
+	
+	<select id="listCount" resultType="int">
+		SELECT
+			COUNT(BOARD_NUM)
+		FROM
+			MP_BOARD
+		WHERE BOARD_NUM > 0
+	</select>
+
    		
 </mapper>

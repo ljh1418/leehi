@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="file">
+	
+
+	<!-- <select id="fileNumSeq" resultType="java.lang.String">
+		/*fileNumSeq*/
+		SELECT 
+			NVL(MAX(FILE_NUM), 0)+1
+		FROM 
+			MP_FILE
+	</select> -->
+	
+	<!-- insert로 처리할것  -->
+	<!-- order="BEFORE" >>> insert를 실행하기전에 실행한다는 설정 -->
+	<insert id="insertFile" parameterType="hashMap">
+		/*
+		fileInsert
+		MySQL Version NVL 과 IFNULL의 차이 >>> IFNULL(MAX(FILE_NUM),0)+1
+		*/
+		<selectKey resultType="java.lang.String" keyProperty="fileNum" order="BEFORE">
+	    	SELECT 
+				NVL(MAX(FILE_NUM), 0)+1
+			FROM
+	  			MP_FILE 
+    	</selectKey>
+		INSERT INTO MP_FILE(
+			FILE_NUM ,
+    		FILE_BOARD_NUM ,
+    		FILE_ORG_NAME ,
+    		FILE_STORED_NAME ,
+    		FILE_SIZE ,
+    		FILE_USE  ,
+    		FILE_REGDATE
+		)VALUES(
+				#{fileNum}    
+			,	#{fileBoardNum}
+			, 	#{fileOrgName}
+			, 	#{fileStoredName}
+			, 	#{fileSize}
+			,	DEFAULT
+			,   SYSDATE
+		)
+	</insert>
+	
+	<select id="fileView" resultType="hashMap">
+		SELECT
+			*
+		FROM
+			MP_FILE
+		WHERE
+			FILE_BOARD_NUM = #{boardNum}
+	</select>
+	
+	
+	<!-- "java.util.ArrayList" -->	
+	<select id="fileData" resultType="hashMap">
+		/*fileData !!!!!!!!!!!!!!!*/
+		SELECT
+			FILE_NUM
+		,	FILE_BOARD_NUM
+		,	FILE_ORG_NAME
+		,	FILE_USE
+		,	FILE_REGDATE
+		,	ROUND(FILE_SIZE/1024,1) AS FILE_SIZE			
+		FROM
+			MP_FILE
+		WHERE
+			FILE_BOARD_NUM = #{boardNum}
+		AND
+			FILE_USE = 'Y' 
+	</select>
+	
+	
+	<select id="detailFile" resultType="hashMap">
+		/*detailFile !!!!!!!!!!!!!!!*/
+		SELECT
+			FILE_NUM
+		,	FILE_BOARD_NUM
+		,	FILE_ORG_NAME
+		,	FILE_USE
+		,	FILE_REGDATE
+		,	ROUND(FILE_SIZE/1024,1) AS FILE_SIZE			
+		FROM
+			MP_FILE
+		WHERE
+			FILE_BOARD_NUM = #{boardNum}
+		AND
+			FILE_USE = 'Y' 
+	</select>
+	
+	
+	<!-- resultType를 String 형태로 받으면 FILE_NUM 이외의 데이터는 unread -->	
+	<select id="selectFile" resultType="hashMap">
+		/*selectFile*/
+		SELECT
+			*
+		FROM
+			MP_FILE
+		WHERE
+			FILE_NUM = #{FILE_NUM}
+	</select>
+	
+	
+	<update id="updateDeleteFile">
+		/*updateDeleteFile*/
+		UPDATE
+			MP_FILE
+		SET
+			FILE_USE = 'N'
+		WHERE
+			FILE_NUM = #{FILE_NUM}
+	</update>
+	
+	   		
+</mapper>

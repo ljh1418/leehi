@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="member">
-
+	
+	<select id="memberSeqNum" resultType="java.lang.String">
+		/*memberSeqNum*/
+		SELECT 
+			NVL(MAX(MEMBER_NUM), 0)+1
+		FROM 
+			MEMBER
+	</select>
+	
 	<select id="memberList" resultType="lee.jun.ho.member.vo.MemberVo">
 		/*boardList*/
 		SELECT 
@@ -14,7 +22,7 @@
 	
 	<!-- parameterType="lee.jun.ho.member.vo.MemberVo" -->
 	
-	<insert id="memberWriter">
+	<insert id="memberInsert">
 		/*memberInsert*/
 		INSERT INTO MEMBER(
 			MEMBER_NUM, 
@@ -24,12 +32,7 @@
 			MEMBER_EMAIL,
 			MEMBER_REGDATE
 		)VALUES (
-		(
-			SELECT 
-				NVL(MAX(MEMBER_NUM), 0) + 1 
-			FROM 
-				MEMBER
-		), 
+		#{memberNum},
 		#{memberId}, 
 		#{memberName}, 
 		#{memberPw}, 
@@ -49,7 +52,7 @@
 	</select>	
 	
 	
-	<update id="memberUpdate" >
+	<update id="memberUpdate">
 		/*memberUpdate*/
 		UPDATE 
 			MEMBER
@@ -62,7 +65,16 @@
 		,
 			MEMBER_EMAIL = #{memberEmail}
 		WHERE
-			MEMBER_NUM = #{memeberNum}
+			MEMBER_NUM = #{memberNum}
 	</update>
+	
+	<delete id="memberDelete">
+		DELETE 
+			FROM 
+		MEMBER
+			WHERE
+		MEMBER_NUM = #{memberNum}
+			
+	</delete>
 
 </mapper>

@@ -11,9 +11,9 @@
 $(document).ready(function(){
 	
 
-	$("#btnMemberInsert").click(function(){
-		
-	
+/* 	$("#btnMemberInsert").click(function(){ */
+	$("#btnMemberInsert").on('click',function(e){
+			
 		var memberId = $("#memberId").val(); 
 		console.log("memberId : ",memberId);
 		
@@ -26,7 +26,59 @@ $(document).ready(function(){
 		var memberEmail = $("#memberEmail").val();
 		console.log("memberEmail : ",memberEmail);
 		
-		//폴더의 memberinfo가 붙어서 action 전송
+		//이메일 정규식
+		var emailCheck = /\w+@\w+\.\w+(\.\w+)?/;
+		console.log("이메일 체크 ::: ",emailCheck.test(memberEmail));
+		
+		//뛰어쓰기 정규식
+		var spaceCheck = /\s/g;
+		
+		
+		if(memberId == ""){
+			alert("아이디를 입력해주세요.");
+			document.form.memberId.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+		
+		if(memberPw == ""){
+			alert("비밀번호를 입력해주세요.");
+			document.form.memberPw.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+		
+		if(memberNm == ""){
+			alert("이름을 입력해주세요");
+			document.form.memberPw.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+		
+		if(memberId.match(spaceCheck)){
+			alert("뛰어쓰기는 허용되지 않습니다.")
+			document.form.memberId.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+		
+		if(memberEmail == ""){
+			alert("이메일을 입력해주세요.");
+			document.form.memberEmail.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+
+		//false 이면 들어옴
+		if(!emailCheck.test(memberEmail)){
+			console.log("emailCheck ::: ",emailCheck);
+			alert("이메일형식을 제대로 입력해주세요.")
+			document.form.memberEmail.focus();
+			e.preventDefault(); //이동을 막아버림 == return false;
+		}
+		
+		document.form.action="/memberinfo/memberInsert.do";
+		document.form.submit();
+		
+		
+/* 		
+ 
+		///폴더의 memberinfo가 붙어서 action 전송
 		//var action = "/memberinfo/memberInsert.do";
 		//console.log("action : ",action);
 		
@@ -42,22 +94,10 @@ $(document).ready(function(){
 		i.setAttribute("value",memberId); // value 속성을 neilong에 담겨있는 값으로 설정 
 		f.appendChild(i); // form 엘리멘트에 input 엘리멘트 추가 
 		
-		alert("1");
-		f.submit(); // form 태그 서브밋 실행
-	
+		f.submit(); // form 태그 서브밋 실행 
+		
+		*/
 
-		
-		
-		//$("#formId").submit();
-		
-		/* var idChkVal = $("#idChk").val();
-		console.log('idChkVal : '. idChkVal);
-		
-		if(idChkVal == "N"){
-			alert("중복확인 버튼을 눌러주세요.");
-		}else if(idChkVal == "Y"){
-			$("#joinForm").submit();
-		} */ 
 	})
 	
 	$("#btnLoginPage").click(function(){
@@ -72,7 +112,7 @@ $(document).ready(function(){
 </head>
 <body>
 	<h1>회원등록</h1>
-	<form action="/memberinfo/memberWriter.do" method="post">
+	<form name="form" action="${actionType}" method="post">
 	<table border="1" width="800px">
 		<tr>
 			<td>아이디</td>
@@ -91,7 +131,7 @@ $(document).ready(function(){
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input name="memberEmail" id="memberEmail"></td>
+			<td><input name="memberEmail" id="memberEmail" placeholder="ex)test@gmail.com"></td>
 		</tr>
 		<!-- <tr>
 			<td>우편번호</td>
@@ -116,7 +156,8 @@ $(document).ready(function(){
 		<!-- 회원중복 체크 했는지 -->
 		<!-- <input id="idChk" type="hidden" value="N"> -->
 	</table>
-	<button type="submit">등록하기</button>
+	<!-- <button type="submit">등록하기</button> -->
+	<button type="button" id="btnMemberInsert">회원등록</button>
 	<button type="button" id="btnLoginPage">로그인페이지로 돌아가기</button>
 	</form>
 </body>

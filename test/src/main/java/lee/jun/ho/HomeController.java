@@ -49,6 +49,12 @@ public class HomeController {
 		return "index";
 	}
 	
+	//메인페이지
+	@GetMapping("/main.do")
+	public String main() {
+		return "main";
+	}
+	
 	
 	@GetMapping("testPage.do")
 	public String testPage() {

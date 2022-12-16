@@ -20,7 +20,7 @@ public class LoginController {
 	LoginService loginService;
 	
 	//로그인페이지 이동
-	@GetMapping("login/loginPage.do")
+	@GetMapping("/login/loginPage.do")
 	public String loginPage() throws Exception{
 		return "login/loginPage";
 	}
@@ -54,7 +54,7 @@ public class LoginController {
 		log.info("memberInfo : " + memberInfo);
 		
 		if(memberInfo != null) {
-			mav.setViewName("index");
+			mav.setViewName("main");
 			//mav.addObject("message","success");
 		}else {
 			mav.setViewName("/login/loginPage");
@@ -71,12 +71,10 @@ public class LoginController {
 		
 		loginService.logout(session);
 		
-		mav.setViewName("login/loginPage");
+		mav.setViewName("main");
 		mav.addObject("message","logout");
 		
 		return mav;
-		
-		
 	}
 	
 	

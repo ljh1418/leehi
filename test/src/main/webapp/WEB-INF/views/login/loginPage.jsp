@@ -34,7 +34,8 @@
 		
 		//회원가입 페이지 이동
 		$("#btnMemeberWriter").click(function(){
-			location.href="/memberinfo/memberInsertPage.do";	
+			location.href="/memberinfo/memberWriter.do";	
+			
 		});
 	    
 	});
@@ -42,35 +43,47 @@
 </script>
 </head>
 <body>
-	<h1>로그인</h1>
-    <form name="form" method="post">
-        <table border="1" width="400px">
-            <tr>
-                <td>아이디</td>
-                <td><input name="memberId" id="userId"></td>
-            </tr>
-            <tr>
-                <td>비밀번호</td>
-                <td><input type="password" name="memberPw" id="userPw"></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="button" id="btnLogin">로그인</button>
-                    <button type="button" id="btnMemeberWriter">회원가입</button>
-                <c:if test="${message == 'error'}">
-                    <div style="color: red">
-						아이디 또는 비밀번호가 일치하지 않습니다.
-                    </div>
-                </c:if>
-                <c:if test="${message == 'logout'}">
-                    <div style="color: red">
-						로그아웃되었습니다.
-                    </div>
-                </c:if>
-                </td>
-            </tr>
-        </table>
-    </form>
-
+	<div>
+		<a href="/main.do">
+			<h1>MAIN</h1>
+		</a>
+	</div>
+	
+	<div>
+		<h2>로그인페이지</h2>
+	    <form name="form" method="post">
+	        <table border="1" width="400px">
+	            <tr>
+	                <td>아이디</td>
+	                <td><input name="memberId" id="userId"></td>
+	            </tr>
+	            <tr>
+	                <td>비밀번호</td>
+	                <td><input type="password" name="memberPw" id="userPw"></td>
+	            </tr>
+	            <tr>
+	                <td colspan="2" align="center">
+	                    <button type="button" id="btnLogin">로그인</button>
+	                    <button type="button" id="btnMemeberWriter">회원가입</button>
+	                <c:if test="${message == 'error'}">
+	                    <div style="color: red">
+							아이디 또는 비밀번호가 일치하지 않습니다.
+	                    </div>
+	                </c:if>
+	                <c:if test="${message == 'logout'}">
+	                    <div style="color: red">
+							로그아웃되었습니다.
+	                    </div>
+	                </c:if>
+	                <c:if test="${message == 'writeLogin'}">
+	                    <div style="color: red">
+							글작성은 로그인이 필요합니다.
+	                    </div>
+	                </c:if>
+	                </td>
+	            </tr>
+	        </table>
+	    </form>
+	</div>
 </body>
 </html>
